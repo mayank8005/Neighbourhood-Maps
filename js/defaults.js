@@ -1,0 +1,1 @@
+var initialMapCenter = {lat: 23.2599330, lng: 77.4126150};
