@@ -76,8 +76,8 @@ body{
     display: none;
     background-color: #212121;
     overflow: hidden;
+    text-align: left;
     color: white;
-    margin-left: 16px;
     position: fixed;
 }
 
@@ -88,66 +88,49 @@ body{
 
 /* style for map area */
 #map{
+    display: inline-block;
     bottom:0px;
-    top: 40px;
     height: 100%;
     left: 380px;
     width: calc(100% - 380px);
     position: absolute;
+    padding-bottom: 0;
     right: 0px;
 }
 
 /* media query for whole page */
 @media only screen and (max-width: 500px){
 
-    body,html{
-        overflow: hidden;
-        padding: 0;
-        margin: 0;
-        display: inline;
+    body html{
+        width: 100%;
+        overflow-x: hidden;
     }
 
     #container{
-        border: none;
-        overflow: hidden;
-        display: inline;
-        padding: 0;
-        margin: 0;
-        width: 100%;
+        width: calc(100% - 4px);
+        overflow-x: hidden;
     }
+
     #option-panel{
-        position: fixed;
+        padding: 10px;
         display: block;
-        border: none;
-        margin: 0;
-        padding-right: 0;
-        padding-left: 16px;
-        padding-top: 24px;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-    }
-    #toggle-area{
-        overflow: hidden;
-        text-align: center;
+        left: 0;
+        top: 0;
+        position: fixed;
+        width: calc(100% - 30px);
+        overflow-x: hidden;
     }
     #map{
-        position: relative;
-        top: 30px;
         display: none;
-        overflow: hidden;
-    }
-    .places-list-item{
-        overflow: hidden;
-    }
-    #option-panel-title{
-        overflow: hidden;
-    }
-    #filter{
-        overflow: hidden;
+        padding: 0;
+        height: 100%;
 
     }
-    #toggle-open-area{
-        display: block;
+    #toggle-area{
+        text-align: center;
     }
+    #when-open{
+        width: 100%;
+    }
+
 }

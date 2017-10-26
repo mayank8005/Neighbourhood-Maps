@@ -1,19 +1,23 @@
 var map;
 
 $(document).ready(function () {
-    
+
     //setting up toggle button
 
     // close sidebar
     $('#toggle').click(function () {
 
-        $('#option-panel').toggle();
-        $('#toggle-open-area').toggle();
-        $('#map').css('left', 0);
-        $('#map').css('width', '100%');
+        $('#when-open').hide();
+        $('#toggle-open-area').show();
+        $('#option-panel').css('width','25px');
+        $('#map').css('left', 57);
+        $('#map').css('width', 'calc(100% - 57px)');
+        console.log('close sidebar');
         if($(window).width() <= 500){
             $('#map').show();
+            console.log('close sidebar<500');
         }
+        console.log('resize');
         resizeMap();
     });
 
@@ -21,8 +25,10 @@ $(document).ready(function () {
     // open sidebar
     $('#toggle-open').click(function () {
 
-        $('#option-panel').toggle();
-        $('#toggle-open-area').toggle();
+        $('#option-panel').css('width','340px');
+        $('#when-open').show();
+        console.log('open sidebar');
+        $('#toggle-open-area').hide();
         $('#map').css('left', 380);
         $('#map').css('width', 'calc(100% - 380px)');
         if($(window).width() <= 500){
@@ -34,6 +40,10 @@ $(document).ready(function () {
     $(window).on('resize', function(){
         if($(window).width() > 500){
             $('#map').show();
+        }
+        else {
+            $('#toggle-open').click();
+            resizeMap();
         }
     });
 
@@ -58,9 +68,12 @@ function initMap() {
 
 // function which resize maps
 function resizeMap(){
-    try{var currCenter = map.getCenter();
+    try{
+        console.log('resize map called');
+        var currCenter = map.getCenter();
         google.maps.event.trigger(map, 'resize');
         map.setCenter(currCenter);
+        console.log('resize map completed');
     }
     catch(err){
         console.log('unable to resize map' + err);
