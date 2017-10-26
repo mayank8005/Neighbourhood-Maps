@@ -1,0 +1,84 @@
+/* removing unwanted margin */
+*{
+    padding:0;
+    margin: 0;
+}
+
+/* addingstyle to html */
+html{
+    height: 100%;
+}
+
+/* adding css to body */
+body{
+    min-height: 100%;
+}
+
+/* style for container which contain whole page */
+#container{
+    background-color: #303030;
+    height: 100%;
+    color: aliceblue;
+    border: 2px #424242 solid;
+}
+
+/* style for option panel */
+#option-panel{
+    position: absolute;
+    border-right: 2px aliceblue solid;
+    width: 340px;
+    height: calc(100% - 4px);
+    padding-top: 24px;
+    padding-left: 24px;
+    padding-right: 5px;
+    background-color: #000000;
+    text-align: left;
+
+}
+#toggle-area{
+    text-align: right;
+    font-size: 25px;
+}
+
+#toggle-area a{
+    color: aliceblue;
+    text-decoration: none;
+}
+
+#filter{
+    margin-top: 16px;
+    padding: 5px;
+    width: 75%;
+    display: inline-block;
+}
+
+#option-panel-title{
+    padding-bottom: 16px;
+}
+
+#places-list{
+    margin-top: 24px;
+    list-style: none;
+}
+
+.places-list-item{
+    padding: 24px;
+}
+
+.places-list-item:hover{
+    background-color: #757575;
+}
+
+/* style for toggle open */
+#toggle-open-area{
+    display: none;
+    color: black;
+    margin-left: 16px;
+    margin-top: 16px;
+    position: fixed;
+}
+
+#toggle-open{
+    font-size: 25px;
+    position: fixed;
+}
