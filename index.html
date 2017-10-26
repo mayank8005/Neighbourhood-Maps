@@ -14,6 +14,9 @@
     <!-- jquery google cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+    <!-- loading knockout js lib -->
+    <script src="js/lib/knockout-3.2.0.js"></script>
+
     <!-- loading our script -->
     <!-- loads default variables -->
     <script src="js/defaults.js"></script>
@@ -30,14 +33,14 @@
         <section id="option-panel">
 
             <div id="toggle-open-area">
-                <a class="fa fa-angle-double-right" id="toggle-open"></a>
+                <a class="fa fa-angle-double-right" id="toggle-open" data-bind="click: openSidebar"></a>
             </div>
 
             <div id="when-open">
                 <h1 id="option-panel-title">Neighbourhood Maps</h1>
 
                 <div id="toggle-area">
-                    <a class="fa fa-angle-double-left" id="toggle"></a>
+                    <a class="fa fa-angle-double-left" id="toggle" data-bind="click: closeSidebar"></a>
                 </div>
 
                 <!-- filter text box -->

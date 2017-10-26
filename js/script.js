@@ -2,40 +2,39 @@ var map;
 
 $(document).ready(function () {
 
-    //setting up toggle button
+    // view model
+    var viewModel = function(){
 
-    // close sidebar
-    $('#toggle').click(function () {
+        // closes sidebar
+        this.closeSidebar = function() {
+            $('#when-open').hide();
+            $('#toggle-open-area').show();
+            $('#option-panel').css('width','25px');
+            $('#map').css('left', 57);
+            $('#map').css('width', 'calc(100% - 57px)');
+            if($(window).width() <= 500){
+                $('#map').show();
+            }
+            resizeMap();
+        };
 
-        $('#when-open').hide();
-        $('#toggle-open-area').show();
-        $('#option-panel').css('width','25px');
-        $('#map').css('left', 57);
-        $('#map').css('width', 'calc(100% - 57px)');
-        console.log('close sidebar');
-        if($(window).width() <= 500){
-            $('#map').show();
-            console.log('close sidebar<500');
-        }
-        console.log('resize');
-        resizeMap();
-    });
+        //open sidebar
+        this.openSidebar = function () {
+                $('#option-panel').css('width','340px');
+                $('#when-open').show();
+                $('#toggle-open-area').hide();
+                $('#map').css('left', 380);
+                $('#map').css('width', 'calc(100% - 380px)');
+                if($(window).width() <= 500){
+                    $('#map').hide();
+                }
+                resizeMap();
+        };
+    };
 
+    // binding view Model and view
+    ko.applyBindings(new viewModel());
 
-    // open sidebar
-    $('#toggle-open').click(function () {
-
-        $('#option-panel').css('width','340px');
-        $('#when-open').show();
-        console.log('open sidebar');
-        $('#toggle-open-area').hide();
-        $('#map').css('left', 380);
-        $('#map').css('width', 'calc(100% - 380px)');
-        if($(window).width() <= 500){
-            $('#map').hide();
-        }
-        resizeMap();
-    });
 
     $(window).on('resize', function(){
         if($(window).width() > 500){
@@ -69,11 +68,9 @@ function initMap() {
 // function which resize maps
 function resizeMap(){
     try{
-        console.log('resize map called');
         var currCenter = map.getCenter();
         google.maps.event.trigger(map, 'resize');
         map.setCenter(currCenter);
-        console.log('resize map completed');
     }
     catch(err){
         console.log('unable to resize map' + err);
