@@ -85,7 +85,15 @@ $(document).ready(function () {
             // red color icon
             marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
             marker.setAnimation(null);
-        }
+        };
+
+        // trigger when location list item is clicked
+        this.listItemClicked = function (location) {
+            if(!map_init)
+                return;
+            marker = getMarkerByLocation(location);
+            new  google.maps.event.trigger(marker, 'click');
+        };
     };
 
     // binding view Model and view
@@ -107,6 +115,7 @@ $(document).ready(function () {
 // init google maps
 function initMap() {
 
+    var infoWindow = new google.maps.InfoWindow();
     map = new google.maps.Map($('#map')[0], {
         // initializing map data
         center: initialMapCenter,
@@ -130,6 +139,30 @@ function initMap() {
         // pushing marker to markers array
         markers.push({marker: marker, id: locationToLoad.id});
 
+        marker.addListener('click', function (marker) {
+            return function () {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function () {
+                    marker.setAnimation(null);
+                }, 1500);
+                populateInfoWindow(marker, infoWindow);
+            }
+        }(marker));
+
+    }
+
+    // populate info window with content
+    function populateInfoWindow(marker, info) {
+        if(info.marker!=marker){
+            info.marker = marker;
+            info.setContent(getInfoContent(marker.title));
+            info.open(map, marker);
+            getWikiLinks(marker.title);
+
+            info.addListener('closeclick', function () {
+                info.setMap(null);
+            });
+        }
     }
 
     //adjust map
@@ -185,8 +218,55 @@ function hideAllMarkers(){
 
 // show markers on the map as per the locations array given as a parameter
 function showMarkersbyLocations(locations) {
+    if(!map_init)
+        return;
     for(var i=0;i<locations.length;i++){
         var marker =getMarkerByLocation(locations[i]).marker;
         marker.setMap(map);
     }
+}
+
+// gives default content of info Window
+function getInfoContent(title){
+    // adding title to content
+    var content = "<h1 id='map-marker-title'>" + title + "</h1>";
+
+    //adding wikipedia link area to content
+    content += '<div id="map-marker-wiki"><h2>relevant Wikipedia links </h2>' +
+        '<ul id="map-marker-wiki-list">loading</ul></div>';
+
+    return content;
+}
+
+
+// gives top 3 wikipedia links
+function getWikiLinks(search) {
+
+    var $wikiElem = $('#map-marker-wiki-list');
+
+    var wikiURL = 'https://en.wikipedia.org/w/api.php?format=json&action=opensearch&search='+search;
+
+    // for handling error
+    var wikiTimeout = setTimeout(function () {
+        $wikiElem.text('Failed to load wiki resources');
+    },8000);
+
+    $.ajax({
+        url: wikiURL,
+        dataType: 'jsonp',
+        success: function (data) {
+
+            $wikiElem.text('');
+            var wikiArticleList = data[1];
+            if(wikiArticleList.length==0){
+                $wikiElem.text('no article found')
+            }
+            for(var i=0;i<wikiArticleList.length&&i<3;i++){
+                var articleURL = 'https://en.wikipedia.org/wiki/' + wikiArticleList[i];
+                $wikiElem.append(`<li><a href="${articleURL}">${wikiArticleList[i]}</a></li>`);
+            }
+            // clearing error timeout as no error detected
+            clearTimeout(wikiTimeout);
+        }
+    });
 }

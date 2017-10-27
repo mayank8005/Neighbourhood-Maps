@@ -134,3 +134,13 @@ body{
     }
 
 }
+
+/* style for map marker*/
+#map-marker-title{
+    color: black;
+    text-decoration: underline;
+}
+
+#map-marker-wiki{
+    color: black;
+}

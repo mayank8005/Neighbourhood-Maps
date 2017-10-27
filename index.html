@@ -49,7 +49,7 @@
             <div id="places-list-division">
                 <ul id="places-list" data-bind="foreach: locations">
                     <li class="places-list-item"
-                        data-bind="text:title,
+                        data-bind="text:title, click: $parent.listItemClicked,
                         event: { mouseover: $parent.listMouseHover, mouseout: $parent.listMouseNotHover}"></li>
                 </ul>
             </div>
