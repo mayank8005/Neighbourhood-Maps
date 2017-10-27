@@ -128,6 +128,7 @@ function initMap() {
         // initializing map data
         center: initialMapCenter,
         zoom: 13,
+        styles: mapStyle,
         mapTypeControl: false
     });
 
