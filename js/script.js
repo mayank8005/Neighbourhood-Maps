@@ -1,7 +1,10 @@
+// variable to reference map
 var map;
+// list of markers
 var markers =[];
 // check's if map init or not
 var map_init = false;
+
 
 $(document).ready(function () {
 
@@ -49,6 +52,7 @@ $(document).ready(function () {
                 $('#map').show();
             }
             resizeMap();
+            adjustBounds();
         };
 
 
@@ -73,7 +77,6 @@ $(document).ready(function () {
             var marker = getMarkerByLocation(location).marker;
             // green color icon
             marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-            marker.setAnimation(google.maps.Animation.BOUNCE);
 
         };
 
@@ -84,15 +87,17 @@ $(document).ready(function () {
             var marker = getMarkerByLocation(location).marker;
             // red color icon
             marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
-            marker.setAnimation(null);
         };
 
-        // trigger when location list item is clicked
+        // trigger when location from location list is clicked
         this.listItemClicked = function (location) {
             if(!map_init)
                 return;
-            marker = getMarkerByLocation(location);
-            new  google.maps.event.trigger(marker, 'click');
+            var marker = getMarkerByLocation(location).marker;
+            google.maps.event.trigger(marker, 'click');
+            if($(window).width() <= 500){
+                $('#toggle').click();
+            }
         };
     };
 
@@ -107,12 +112,15 @@ $(document).ready(function () {
         else {
             $('#toggle-open').click();
             resizeMap();
+            adjustBounds();
         }
     });
 
 });
 
-// init google maps
+/**
+ * @description initializes google maps
+ */
 function initMap() {
 
     var infoWindow = new google.maps.InfoWindow();
@@ -178,7 +186,9 @@ function initMap() {
 
 }
 
-// function which resize maps
+/**
+ * @description function which resize maps
+ */
 function resizeMap(){
     try{
         var currCenter = map.getCenter();
@@ -190,7 +200,10 @@ function resizeMap(){
     }
 }
 
-// adjust map bounds acc to markers
+
+/**
+ * @description adjust map bounds acc to markers
+ */
 function adjustBounds(){
 
     var bounds =new  google.maps.LatLngBounds();
@@ -200,7 +213,12 @@ function adjustBounds(){
     map.fitBounds(bounds);
 }
 
-//returns marker using location
+
+/**
+ * @description show markers on the map as per the locations array given as a parameter
+ * @param {object} location
+ * @return {object} marker
+ */
 function getMarkerByLocation(location){
 
     return markers.find(function (marker) {
@@ -208,7 +226,10 @@ function getMarkerByLocation(location){
     });
 }
 
-//hide all the markers on the map
+
+/**
+ * @description hide all the markers on the map
+ */
 function hideAllMarkers(){
     for(var i=0;i<markers.length;i++){
         var marker = markers[i].marker;
@@ -216,7 +237,11 @@ function hideAllMarkers(){
     }
 }
 
-// show markers on the map as per the locations array given as a parameter
+
+/**
+ * @description show markers on the map as per the locations array given as a parameter
+ * @param {object[]} locations
+ */
 function showMarkersbyLocations(locations) {
     if(!map_init)
         return;
@@ -226,7 +251,11 @@ function showMarkersbyLocations(locations) {
     }
 }
 
-// gives default content of info Window
+/**
+ * @description gives default template of infowindow
+ * @param {string} title
+ * @return {string} default content
+ */
 function getInfoContent(title){
     // adding title to content
     var content = "<h1 id='map-marker-title'>" + title + "</h1>";
@@ -240,6 +269,10 @@ function getInfoContent(title){
 
 
 // gives top 3 wikipedia links
+/**
+ * @description gives top 3 wikipedia links and automatically adds it to maps info window
+ * @param {string} search
+ */
 function getWikiLinks(search) {
 
     var $wikiElem = $('#map-marker-wiki-list');
