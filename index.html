@@ -27,44 +27,43 @@
 </head>
 <body>
 
-    <div id="container">
+<div id="container">
 
-        <!--contain features like list of places and filter-->
-        <section id="option-panel">
+    <!--contain features like list of places and filter-->
+    <section id="option-panel">
 
-            <div id="toggle-open-area">
-                <a class="fa fa-angle-double-right" id="toggle-open" data-bind="click: openSidebar"></a>
+        <div id="toggle-open-area">
+            <a class="fa fa-angle-double-right" id="toggle-open" data-bind="click: openSidebar"></a>
+        </div>
+
+        <div id="when-open">
+            <h1 id="option-panel-title">Neighbourhood Maps</h1>
+
+            <div id="toggle-area">
+                <a class="fa fa-angle-double-left" id="toggle" data-bind="click: closeSidebar"></a>
             </div>
 
-            <div id="when-open">
-                <h1 id="option-panel-title">Neighbourhood Maps</h1>
+            <!-- filter text box -->
+            <input type="text" placeholder="filter" id="filter">
 
-                <div id="toggle-area">
-                    <a class="fa fa-angle-double-left" id="toggle" data-bind="click: closeSidebar"></a>
-                </div>
-
-                <!-- filter text box -->
-                <input type="text" placeholder="filter" id="filter">
-
-                <div id="places-list-division">
-                    <ul id="places-list">
-                        <li class="places-list-item">example place 1 </li>
-                        <li class="places-list-item">example place 2 </li>
-                        <li class="places-list-item">remove list </li>
-                        <li class="places-list-item">after ui </li>
-                    </ul>
-                </div>
+            <div id="places-list-division">
+                <ul id="places-list" data-bind="foreach: locations">
+                    <li class="places-list-item"
+                        data-bind="text:title,
+                        event: { mouseover: $parent.listMouseHover, mouseout: $parent.listMouseNotHover}"></li>
+                </ul>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- contain map -->
-        <section id="map"></section>
+    <!-- contain map -->
+    <section id="map"></section>
 
-    </div>
+</div>
 
-    <!-- google maps api script -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq_nkcN-3Tux6rNLjKHwnHumhgeY2zrpg&callback=initMap"
-            async defer></script>
+<!-- google maps api script -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq_nkcN-3Tux6rNLjKHwnHumhgeY2zrpg&callback=initMap"
+        async defer></script>
 
 
 </body>
