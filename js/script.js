@@ -305,3 +305,12 @@ function getWikiLinks(search, infoWindow) {
         infoWindow.setContent(getInfoContent(search, 'failed to load wiki resources'));
     });
 }
+
+/**
+ * @description notify user about google maps problem
+ */
+function gAPIError() {
+    console.error('google maps failed to load');
+    // notify user about google maps
+    alert('unable to load google maps');
+}
