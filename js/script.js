@@ -32,7 +32,7 @@ $(document).ready(function () {
 
             var filteredLocations = ko.utils.arrayFilter(initialLocation, function (item) {
                 var itemToCheck = String(item.title.toLowerCase());
-                return itemToCheck.startsWith(filterText.toLowerCase());
+                return (itemToCheck.indexOf(filterText.toLowerCase()) !== -1);
             });
 
             showMarkersbyLocations(filteredLocations);
