@@ -2,6 +2,7 @@
 var initialMapCenter = {lat: 23.2599330, lng: 77.4126150};
 
 // initial locations/default locations to be loaded on maps
+//TODO: add additional locations here
 
 var initialLocation = [{title: 'DB city', location: {lat: 23.232618, lng: 77.429969}, id: 1 },
                         {title: 'Lower Lake Bhopal', location: {lat: 23.242806, lng: 77.381067}, id: 2 },
