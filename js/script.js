@@ -166,7 +166,7 @@ function initMap() {
             info.marker = marker;
             info.setContent(getInfoContent(marker.title));
             info.open(map, marker);
-            getWikiLinks(marker.title);
+            getWikiLinks(marker.title, infoWindow);
 
             info.addListener('closeclick', function () {
                 info.setMap(null);
@@ -255,15 +255,16 @@ function showMarkersbyLocations(locations) {
 /**
  * @description gives default template of infowindow
  * @param {string} title
+ * @param {string} wikiLinks
  * @return {string} default content
  */
-function getInfoContent(title){
+function getInfoContent(title, wikiLinks = 'Loading'){
     // adding title to content
     var content = "<h1 id='map-marker-title'>" + title + "</h1>";
 
     //adding wikipedia link area to content
     content += '<div id="map-marker-wiki"><h2>relevant Wikipedia links </h2>' +
-        '<ul id="map-marker-wiki-list">loading</ul></div>';
+        '<ul id="map-marker-wiki-list">' + wikiLinks + '</ul></div>';
 
     return content;
 }
@@ -272,35 +273,35 @@ function getInfoContent(title){
 // gives top 3 wikipedia links
 /**
  * @description gives top 3 wikipedia links and automatically adds it to maps info window
- * @param {string} search
+ * @param {string} search/location name
+ * @param {object} infoWindow
  */
-function getWikiLinks(search) {
+function getWikiLinks(search, infoWindow) {
 
     var $wikiElem = $('#map-marker-wiki-list');
 
     var wikiURL = 'https://en.wikipedia.org/w/api.php?format=json&action=opensearch&search='+search;
-
-    // for handling error
-    var wikiTimeout = setTimeout(function () {
-        $wikiElem.text('Failed to load wiki resources');
-    },8000);
 
     $.ajax({
         url: wikiURL,
         dataType: 'jsonp',
         success: function (data) {
 
+            var wikiContent = '';
             $wikiElem.text('');
             var wikiArticleList = data[1];
             if(wikiArticleList.length==0){
-                $wikiElem.text('no article found')
+                wikiContent += 'no article found'
             }
             for(var i=0;i<wikiArticleList.length&&i<3;i++){
                 var articleURL = 'https://en.wikipedia.org/wiki/' + wikiArticleList[i];
-                $wikiElem.append(`<li><a href="${articleURL}">${wikiArticleList[i]}</a></li>`);
+                wikiContent += `<li><a href="${articleURL}">${wikiArticleList[i]}</a></li>`;
             }
             // clearing error timeout as no error detected
-            clearTimeout(wikiTimeout);
+
+            infoWindow.setContent(getInfoContent(search, wikiContent));
         }
+    }).fail(function () {
+        infoWindow.setContent(getInfoContent(search, 'failed to load wiki resources'));
     });
 }
