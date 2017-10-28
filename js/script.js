@@ -3,13 +3,13 @@ var map;
 // list of markers
 var markers =[];
 // check's if map init or not
-var map_init = false;
+var mapInit = false;
 
 
 $(document).ready(function () {
 
     // view model
-    var viewModel = function(){
+    var ViewModel = function(){
 
         var that = this;
 
@@ -72,7 +72,7 @@ $(document).ready(function () {
 
         //function which act when item in list is mouse hovered
         this.listMouseHover = function (location) {
-            if(!map_init)
+            if(!mapInit)
                 return;
             var marker = getMarkerByLocation(location).marker;
             // green color icon
@@ -82,7 +82,7 @@ $(document).ready(function () {
 
         // function to handle when mouse leaves list item
         this.listMouseNotHover =function (location) {
-            if(!map_init)
+            if(!mapInit)
                 return;
             var marker = getMarkerByLocation(location).marker;
             // red color icon
@@ -91,7 +91,7 @@ $(document).ready(function () {
 
         // trigger when location from location list is clicked
         this.listItemClicked = function (location) {
-            if(!map_init)
+            if(!mapInit)
                 return;
             var marker = getMarkerByLocation(location).marker;
             google.maps.event.trigger(marker, 'click');
@@ -102,7 +102,7 @@ $(document).ready(function () {
     };
 
     // binding view Model and view
-    ko.applyBindings(new viewModel());
+    ko.applyBindings(new ViewModel());
 
     // event listener for window size change
     $(window).on('resize', function(){
@@ -182,7 +182,7 @@ function initMap() {
         resizeMap();
     });
 
-    map_init = true;
+    mapInit = true;
 
 
 }
@@ -244,7 +244,7 @@ function hideAllMarkers(){
  * @param {object[]} locations
  */
 function showMarkersbyLocations(locations) {
-    if(!map_init)
+    if(!mapInit)
         return;
     for(var i=0;i<locations.length;i++){
         var marker =getMarkerByLocation(locations[i]).marker;
