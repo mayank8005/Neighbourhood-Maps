@@ -11,17 +11,6 @@
     <!-- awesome fonts css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!-- jquery google cdn -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <!-- loading knockout js lib -->
-    <script src="js/lib/knockout-3.2.0.js"></script>
-
-    <!-- loading our script -->
-    <!-- loads default variables -->
-    <script src="js/defaults.js"></script>
-    <script src="js/script.js"></script>
-
     <title>Neighbourhood</title>
 
 </head>
@@ -30,7 +19,7 @@
 <div id="container">
 
     <!--contain features like list of places and filter-->
-    <section id="option-panel">
+    <aside id="option-panel">
 
         <div id="toggle-open-area">
             <a class="fa fa-angle-double-right" id="toggle-open" data-bind="click: openSidebar"></a>
@@ -54,12 +43,23 @@
                 </ul>
             </div>
         </div>
-    </section>
+    </aside>
 
     <!-- contain map -->
-    <section id="map"></section>
+    <main id="map"></main>
 
 </div>
+
+<!-- jquery google cdn -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- loading knockout js lib -->
+<script src="js/lib/knockout-3.2.0.js"></script>
+
+<!-- loading our script -->
+<!-- loads default variables -->
+<script src="js/defaults.js"></script>
+<script src="js/script.js"></script>
 
 <!-- google maps api script -->
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq_nkcN-3Tux6rNLjKHwnHumhgeY2zrpg&callback=initMap"
